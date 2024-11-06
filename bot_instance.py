@@ -5,7 +5,7 @@ import os
 # Get Bonk Network bot token and create bot client
 AppConfig_obj = config.AppConfig()
 token = AppConfig_obj.get_bonk_staff_key()
-bot = Client(token="{token}")
+bot = Client(token=token)
 
 CHECK_ROLES = [1282491372250857676, 1263837661605527603, 1259828028012232714]
 
