@@ -24,7 +24,7 @@ class Player:
     # notes: Optional[dict] = None
     # previous_apps: Optional[dict] = None
 
-DEFAULT_FILE_NAME = os.join("data", "players.json")
+DEFAULT_FILE_NAME = os.path.join("data", "players.json")
 class PlayersDB:
     def __init__(self, file_name=DEFAULT_FILE_NAME):
         self.file_name = file_name
@@ -70,12 +70,12 @@ def simple_time_translate(text):
         'm': 'minutes',
         's': 'seconds',
         'w': 'weeks',
-        'mo': 'months',  # For months, custom handling will be required.
+        'mo': 'months',
         'M': 'months',  # Additional alias for months
-        'y': 'years'  # For years, custom handling will be required.
+        'y': 'years'
     }
 
-    # Handle special cases like "inf", "infinite", "indefinite", "forever"
+    # handle indefinte cases
     if text.lower() in ['inf', 'infinite', 'indefinite', 'forever']:
         return float('inf')  # Infinite future timestamp
 
@@ -103,8 +103,8 @@ def simple_time_translate(text):
 
     return None
 
-PORT = 9000
-IP = "10.1.1.53"
+PORT = 8000
+IP = "localhost"
 def translate_time(text, ip=IP, port=PORT):
     unix_timestamp = simple_time_translate(text)
     if unix_timestamp is not None:
@@ -131,4 +131,6 @@ def translate_time(text, ip=IP, port=PORT):
 
 
 if __name__ == '__main__':
-    print(translate_time("1 month"))
+    while True:
+        inputed_txt = input("Enter a Time to Translate to Unix: ")
+    print(translate_time(inputed_txt))
