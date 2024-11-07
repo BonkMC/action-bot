@@ -16,11 +16,9 @@ import json
 @dataclass
 class Player:
     userid: int
-    roles: Optional[list] = None
-    ign: Optional[str] = None
-    blacklisted: Optional[bool] = None
-    blacklist_until: Optional[float] = None
-    blacklist_reason: Optional[str] = None
+    ign: str = None
+    banned: Optional[bool] = None
+    banned_until: Optional[float] = None
     # notes: Optional[dict] = None
     # previous_apps: Optional[dict] = None
 
@@ -53,12 +51,12 @@ class PlayersDB:
         data = allplayers_dict[userid]
         data["userid"] = int(userid)
         try:
-            data["blacklist_until"] = int(data["blacklist_until"])
+            data["banned_until"] = int(data["banned_until"])
         except:
             pass
         retrieved_player = Player.from_dict(data)
         try:
-            retrieved_player.blacklist_until = int(retrieved_player.blacklist_until)
+            retrieved_player.banned_until = int(retrieved_player.banned_until)
         except:
             pass
         return retrieved_player
@@ -133,4 +131,4 @@ def translate_time(text, ip=IP, port=PORT):
 if __name__ == '__main__':
     while True:
         inputed_txt = input("Enter a Time to Translate to Unix: ")
-    print(translate_time(inputed_txt))
+        print(translate_time(inputed_txt))

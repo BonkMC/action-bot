@@ -3,10 +3,9 @@ import os
 
 
 class AppConfig:
-    def __init__(self, file_name="secrets.ini", cfg_dir=os.path.expanduser("~")):
-        if cfg_dir is None:
-            cfg_dir = os.path.expanduser("~")
-            self.cfg_dir = os.path.join(cfg_dir, ".pyconfig")
+    def __init__(self, file_name="secrets.ini"):
+        cfg_dir = os.path.expanduser("~")
+        self.cfg_dir = os.path.join(cfg_dir, ".pyconfig")
         self.config_file = os.path.join(self.cfg_dir, file_name)
         if not os.path.isdir(self.cfg_dir):
             raise Exception("Directory {} does not exist".format(self.cfg_dir))
@@ -17,9 +16,13 @@ class AppConfig:
         self.config = configparser.ConfigParser()
         self.config.read(self.config_file)
 
-    def get_bonk_staff_key(self):
+    def get_bonk_bot_key(self):
         main_section = self.config['main']
-        return main_section['bonk_staff_token']
+        return main_section['bonk_bot_token']
+
+    def get_bonk_punisher_key(self):
+        main_section = self.config['main']
+        return main_section['bonk_punisher_token']
 
     def get_config_dir(self):
         return self.cfg_dir
@@ -27,4 +30,4 @@ class AppConfig:
 
 if __name__ == '__main__':
     app_config = AppConfig()
-    print(app_config.get_bonk_staff_key())
+    print(app_config.get_bonk_punisher_key())

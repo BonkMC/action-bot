@@ -4,10 +4,10 @@ import os
 
 # Get Bonk Network bot token and create bot client
 AppConfig_obj = config.AppConfig()
-token = AppConfig_obj.get_bonk_staff_key()
+token = AppConfig_obj.get_bonk_punisher_key()
 bot = Client(token=token)
 
-CHECK_ROLES = [1282491372250857676, 1263837661605527603, 1259828028012232714]
+CHECK_ROLES = [1259606868939247686, 1303524092846145596, 1259605492230000731, 1298484402216501249, 1259874782103605268, 1277325708082806847, 1259605722140774411]
 
 # Role check decorator for role-specific commands
 def role_check():
