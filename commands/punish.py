@@ -1,7 +1,7 @@
 from interactions import slash_command, slash_option, OptionType, SlashContext, Embed, SlashCommandChoice
 from utils import colors
 import time
-from bot_instance import role_check
+from bot_instance import sr_role_check
 
 # Discord channel ID for punishments
 CONSOLE_CHANNEL_ID = 1271152792207229081
@@ -55,26 +55,27 @@ punishment_commands = {
     required=True,
     opt_type=OptionType.ATTACHMENT
 )
-@role_check()
+@sr_role_check()
 async def punish(ctx: SlashContext, ign: str, reason: str, proof):
     # Get the punishment command type (e.g., "ban" or "mute") based on reason
     punishment_type = punishment_commands.get(reason)
     if reason == "Irl-Trading":
         reason = "Solicitation"
     command = f"litebans:{punishment_type} {ign} {reason}"
-
     console_channel = await ctx.bot.fetch_channel(CONSOLE_CHANNEL_ID)
     await console_channel.send(command)
 
     # Create and send the embedded message to the Discord channel
+    author = ctx.author
     embed = Embed(
         title="Punishment Executed",
-        description=f"**Action:** {punishment_type.capitalize()}\n**User:** {ign}\n**Reason:** {reason}",
+        description=f"**Action:** {punishment_type.capitalize()}\n**User:** {ign}\n**Punished by:** <@{author.id}>\n**Reason:** {reason}\n**Proof:**",
         color=colors.DiscordColors.RED,
         timestamp=time.time()
     )
     embed.set_footer(text="Punishment System")
     embed.set_image(url=proof.url)
+    embed.set_thumbnail(url=f"https://minotar.net/helm/{ign}/100")
 
     # Send the embed to the punishments channel
     ban_channel = await ctx.bot.fetch_channel(BAN_LOGS_CHANNEL_ID)
