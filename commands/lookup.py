@@ -2,7 +2,7 @@ from interactions import slash_command, slash_option, OptionType, SlashContext, 
 from utils import colors
 from utils.command_utils import PlayersDB
 from json.encoder import INFINITY
-from bot_instance import role_check  # Import role_check from bot_instance
+from bot_instance import staff_role_check  # Import role_check from bot_instance
 
 @slash_command(name="lookup", description="Look up a user in the database.")
 @slash_option(
@@ -11,7 +11,7 @@ from bot_instance import role_check  # Import role_check from bot_instance
     required=True,
     opt_type=OptionType.USER
 )
-@role_check()
+@staff_role_check(exclude=["Trainee", "Helper", "Moderator"])
 async def handle_lookup_command(ctx: SlashContext, user):
     user = ctx.guild.get_member(user)
     database = PlayersDB()

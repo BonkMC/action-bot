@@ -1,5 +1,5 @@
 from interactions import slash_command, slash_option, OptionType, ChannelType, SlashContext
-from bot_instance import bot, role_check
+from bot_instance import bot, staff_role_check
 
 @slash_command(name="say", description="Send a message in a specified channel.")
 @slash_option(
@@ -14,7 +14,7 @@ from bot_instance import bot, role_check
     required=True,
     opt_type=OptionType.STRING
 )
-@role_check()
+@staff_role_check(exclude=["Trainee", "Helper", "Moderator"])
 async def handle_say_command(ctx: SlashContext, channel: ChannelType, message: str):
     channel = await bot.fetch_channel(channel)
     message1 = """@everyone

@@ -3,7 +3,7 @@ from utils import colors
 import time
 from utils.command_utils import Player, PlayersDB, translate_time
 from json.encoder import INFINITY
-from bot_instance import role_check  # Import role_check from bot_instance
+from bot_instance import staff_role_check  # Import role_check from bot_instance
 
 @slash_command(name="blacklist", description="Add a user to the blacklist.")
 @slash_option(
@@ -30,7 +30,7 @@ from bot_instance import role_check  # Import role_check from bot_instance
     required=False,
     opt_type=OptionType.STRING
 )
-@role_check()
+@staff_role_check(exclude=["Trainee", "Helper", "Moderator"])
 async def handle_blacklist_command(ctx: SlashContext, user, blacklist_length, reason=None, ign=None):
     user_obj = ctx.guild.get_member(user)
     user_roles = [int(role.id) for role in user_obj.roles]

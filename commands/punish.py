@@ -1,7 +1,7 @@
 from interactions import slash_command, slash_option, OptionType, SlashContext, Embed, SlashCommandChoice
 from utils import colors
 import time
-from bot_instance import sr_role_check
+from bot_instance import staff_role_check
 
 # Discord channel ID for punishments
 CONSOLE_CHANNEL_ID = 1271152792207229081
@@ -9,30 +9,30 @@ BAN_LOGS_CHANNEL_ID = 1259602927509835818
 
 # Mapping of reasons to punishment commands
 punishment_commands = {
-    "Inappropriate-Structures": "tempban",
-    "Solicitation": "tempban",
-    "Unfair-Advantage": "tempban",
-    "Bug-Exploitation": "tempban",
-    "Chargebacks": "ban",
-    "Punishment-Evasion": "ban",
-    "Excessive-and-Malicious-Rule-Breaking": "tempban",
-    "Inappropriate-Usernmame": "tempban",
-    "Forging-evidence-lying-to-staff": "tempban",
-    "Inappropriate Item Name": "tempban",
-    "Player-Disrespect": "mute",
-    "Discrimination": "mute",
-    "Impersonation": "mute",
-    "Minor-Advertising": "mute",
-    "Major-Advertising": "mute",
-    "Inappropriate-Content": "mute",
-    "Spamming": "mute",
-    "Harassment": "mute",
-    "Death-wishes-Suicidal-encouragment": "mute",
-    "Sensitive Topics": "mute",
-    "Admin Discretion": "ban",
-    "DDoS Doxxing Swatting - Blacklist - No Appeal": "ban",
-    "Blacklist": "ban",
-    "IRL-Trading": "ban"
+    "Inappropriate-Structures": "tempbanip",
+    "Solicitation": "tempbanip",
+    "Unfair-Advantage": "tempbanip",
+    "Bug-Exploitation": "tempbanip",
+    "Chargebacks": "banip",
+    "Punishment-Evasion": "banip",
+    "Excessive-and-Malicious-Rule-Breaking": "tempbanip",
+    "Inappropriate-Usernmame": "tempbanip",
+    "Forging-evidence-lying-to-staff": "tempbanip",
+    "Inappropriate Item Name": "tempbanip",
+    "Player-Disrespect": "tempmuteip",
+    "Discrimination": "tempmuteip",
+    "Impersonation": "tempmuteip",
+    "Minor-Advertising": "tempmuteip",
+    "Major-Advertising": "tempmuteip",
+    "Inappropriate-Content": "tempmuteip",
+    "Spamming": "tempmuteip",
+    "Harassment": "tempmuteip",
+    "Death-wishes-Suicidal-encouragment": "tempmuteip",
+    "Sensitive Topics": "tempmuteip",
+    "Admin Discretion": "banip",
+    "DDoS Doxxing Swatting - Blacklist - No Appeal": "banip",
+    "Blacklist": "banip",
+    "IRL-Trading": "banip"
 }
 
 @slash_command(name="punish", description="Punish a user on the server")
@@ -55,7 +55,7 @@ punishment_commands = {
     required=True,
     opt_type=OptionType.ATTACHMENT
 )
-@sr_role_check()
+@staff_role_check(exclude=["Trainee"])
 async def punish(ctx: SlashContext, ign: str, reason: str, proof):
     # Get the punishment command type (e.g., "ban" or "mute") based on reason
     punishment_type = punishment_commands.get(reason)

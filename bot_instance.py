@@ -1,25 +1,24 @@
 from utils import config
 from interactions import Client, check, SlashContext
 import os
-
+import json
 
 AppConfig_obj = config.AppConfig()
 token = AppConfig_obj.get_bonk_punisher_key()
 bot = Client(token=token, sync_interactions=True)
 
-SR_CHECK_ROLES = [1259606868939247686, 1303524092846145596, 1259605492230000731, 1298484402216501249, 1259874782103605268, 1277325708082806847, 1259605722140774411]
-
-
 
 # Role check decorator for role-specific commands
-def sr_role_check():
+def staff_role_check(exclude: list = [], exclude_acts_as_include: bool = False):
     async def predicate(ctx: SlashContext):
+        with open('data/roleslist.json') as f:
+            roles_dict = json.load(f)
+        check_roles = []
+        for role, (a, b) in roles_dict.items():
+            if not exclude_acts_as_include and role in exclude:
+                continue
+            check_roles.extend((a, b))
         user_roles = [int(i.id) for i in ctx.author.roles]
-        return any(role_id in user_roles for role_id in SR_CHECK_ROLES)
-    return check(predicate)
+        return any(role_id in user_roles for role_id in check_roles)
 
-def higherup_role_check():
-    async def predicate(ctx: SlashContext):
-        user_roles = [int(i.id) for i in ctx.author.roles]
-        return any(role_id in user_roles for role_id in SR_CHECK_ROLES)
     return check(predicate)
