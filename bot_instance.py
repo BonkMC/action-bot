@@ -1,10 +1,14 @@
 from utils import config
 from interactions import Client, check, SlashContext
 import os
+from dotenv import load_dotenv
 import json
 
-AppConfig_obj = config.AppConfig()
-token = AppConfig_obj.get_bonk_punisher_key()
+load_dotenv()
+
+#AppConfig_obj = config.AppConfig()
+#token = AppConfig_obj.get_bonk_punisher_key()
+token = os.getenv("BOT_TOKEN")
 bot = Client(token=token, sync_interactions=True)
 
 
