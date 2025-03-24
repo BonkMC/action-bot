@@ -24,6 +24,10 @@ class AppConfig:
         main_section = self.config['main']
         return main_section['bonk_punisher_token']
 
+    def get_bonk_panel_api_key(self):
+        main_section = self.config['main']
+        return main_section['bonk_panel_api_key']
+
     def get_config_dir(self):
         return self.cfg_dir
 
