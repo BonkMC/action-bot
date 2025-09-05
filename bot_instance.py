@@ -6,8 +6,7 @@ import json
 
 load_dotenv()
 
-#AppConfig_obj = config.AppConfig()
-#token = AppConfig_obj.get_bonk_punisher_key()
+AppConfig_obj = config.AppConfig()
 token = os.getenv("BOT_TOKEN")
 bot = Client(token=token, sync_interactions=True)
 

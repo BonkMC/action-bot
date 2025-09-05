@@ -2,13 +2,12 @@ from interactions import slash_command, slash_option, OptionType, SlashContext, 
 from interactions.api.events import Component
 import time
 from utils import colors
-from bot_instance import sr_role_check, bot
+from bot_instance import bot
 
 @slash_command(
     name="test",
     description="",
 )
-@sr_role_check()
 async def test(ctx):
     channel = ctx
     button = Button(
